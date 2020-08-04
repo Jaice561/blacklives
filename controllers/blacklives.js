@@ -9,13 +9,14 @@ module.exports = {
 }
 
 function create(req, res) {
+    req.body.user = req.user._id
     Blacklive.create(req.body)
     .then(blacklive => {res.json(blacklive)})
     .catch(err => {res.json(err)})
 }
 
 function index(req, res) {
-    Blacklive.find({})
+    Blacklive.find({user: req.user._id})
     .then(blacklive => {res.json(blacklive)})
     .catch(err => {res.json(err)})
 }

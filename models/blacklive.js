@@ -19,6 +19,11 @@ const blackliveSchema = new Schema({
         type: String
     },
 
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }
+
 }, {timestamps: true})
 
 module.exports = mongoose.model('Blacklive', blackliveSchema);
