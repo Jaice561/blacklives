@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Navbar = ({user,  handleLogout }) => {
+const Navbar = ({ user,  handleLogout }) => {
     let nav = user ?
         <>
         <nav>
