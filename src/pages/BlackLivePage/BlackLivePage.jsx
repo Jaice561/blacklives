@@ -4,7 +4,7 @@ import BlackLiveCard from '../../components/BlackLiveCard/BlackLiveCard';
 function BlackLivePage(props) {
     return (
         <>
-       
+       <div className="fullPage">
         <div className='BlackLivePage-grid'>
             {props.blacklives.map(blacklive => 
             <>
@@ -17,8 +17,6 @@ function BlackLivePage(props) {
                      </>
                 )}
         </div>
-        <div>
-            <h1>What is going on</h1>
         </div>
         </>
     )

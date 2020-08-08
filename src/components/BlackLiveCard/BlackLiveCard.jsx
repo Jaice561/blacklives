@@ -27,6 +27,17 @@ function BlackLiveCard({ blacklive, handleDeleteLive }) {
                     </div>
                 </div>
             </div>
+            <div class="row">    
+            <form class="col s12">      
+            <div class="row">        
+            <div class="input-field col s12">          
+            <textarea id="textarea1" class="materialize-textarea"></textarea>          
+            <label for="textarea1">Comments</label>        
+            </div>      
+            </div> 
+            <button type="submit" className="btn green">Post</button>  
+             </form>
+             </div>
         </>
     )
 }
