@@ -3,7 +3,10 @@ import NavBar from '../../components/NavBar/NavBar';
 import './App.css';
 import { Route, Redirect } from 'react-router-dom';
 import * as blackliveAPI from '../../services/blacklives-api'
+import * as commentApi from '../../services/comments-api'
 import AddBlackLivePage from '../AddBlackLivePage/AddBlackLivePage';
+// import EditBlackLivePage from '../EditBlackLivePage/EditBlackLivePage';
+
 import BlackLivePage from '../BlackLivePage/BlackLivePage';
 import LoginPage from '../LoginPage/LoginPage';
 import SignupPage from '../SignupPage/SignupPage';
@@ -12,6 +15,7 @@ import userService from '../../services/userService';
 class App extends Component {
   state = {
     blacklives: [],
+    comments:[],
     user: userService.getUser()
   }
 
@@ -29,26 +33,60 @@ class App extends Component {
     const newBlackLive = await blackliveAPI.create(newBlackLiveData);
     this.setState(state => ({
       blacklives: [...state.blacklives, newBlackLive]
-    }), ()=> this.props.history.push('/'));
+    }), ()=> this.props.history.push('/blacklives'));
   }
 
+   handleAddComment = async newCommentData => {
+    const newComment = await commentApi.create(newCommentData);
+    this.setState(state => ({
+      comments: [...state.comments, newComment]
+    }), ()=> this.props.history.push('/blacklives'));
+  }
+
+    handleDeleteComment = async id => {
+    if(userService.getUser()){
+    await commentApi.deleteOne(id);
+    this.setState(state => ({
+      comments: state.comments.filter(comment => comment._id !== id)
+    }), () => this.props.history.push('/blacklives'));
+  }
+  else {
+    this.props.history.push('/login')
+  }
+}
 
   handleDeleteLive = async id => {
     if(userService.getUser()){
     await blackliveAPI.deleteOne(id);
     this.setState(state => ({
       blacklives: state.blacklives.filter(black => black._id !== id)
-    }), () => this.props.history.push('/'));
+    }), () => this.props.history.push('/blacklives'));
   }
   else {
     this.props.history.push('/login')
   }
 }
+
+//  handleEditLive = async BlackLiveData => {
+//     if(userService.getUser()){
+//         const updatedBlackLive = await blackliveAPI.edit(BlackLiveData);
+//         const newBlackLivesArray = this.state.blacklives.map(b =>
+//     b._id === updatedBlackLive._id ? updatedBlackLive : b)
+//  this.setState(
+//       {blacklives: newBlackLivesArray},
+//       () => this.props.history.push('/blacklives')
+//     )
+//   }
+//   else {
+//     this.props.history.push('/login')
+//   }
+// }
   
 
   async componentDidMount() {
     const blacklives = await blackliveAPI.getAll();
-    this.setState({blacklives})
+    const comments = await commentApi.getAll();
+    this.setState({blacklives,comments})
   }
 
   render() {
@@ -59,17 +97,20 @@ class App extends Component {
         handleLogout={this.handleLogout}
         pageName={"Your Life Matter This Week!"}
         />
-      <Route exact path='/' render={() =>
+      <Route exact path='/blacklives' render={() =>
         <BlackLivePage
         blacklives={this.state.blacklives}
+        comments={this.state.comments}
         handleAddComment={this.handleAddComment}
-        handleDeleteLive={this.handleDeleteLive}
         handleDeleteComment={this.handleDeleteComment}
+        handleDeleteLive={this.handleDeleteLive}
+        handleEditLive={this.handleEditLive}
+        user={this.state.user}
         />
       }>
       </Route>
 
-      <Route exact path='/yourlife/add' render={() =>
+      <Route exact path='/blacklives/add' render={() =>
       userService.getUser() ?
         <AddBlackLivePage
         handleAddBlackLive={this.handleAddBlackLive}
@@ -79,6 +120,17 @@ class App extends Component {
         <Redirect to='/login' />
       }>
       </Route>
+
+       {/* <Route exact path='/edit' render={({location}) =>
+         userService.getUser() ?
+          <EditBlackLivePage
+          handleEditLive={this.handleEditLive}
+          location={location}
+          user={this.state.user}
+          />
+          :
+          <Redirect to='/login' />
+        } /> */}
 
       <Route exact path='/signup' render={({ history }) => 
         <SignupPage

@@ -8,6 +8,7 @@ require('./config/database');
 
 const userRouter = require('./routes/users');
 const blackliveRouter = require('./routes/blacklives')
+const commentRouter = require('./routes/comments')
 
 const cors = require(('cors'))
 
@@ -20,6 +21,7 @@ app.use(express.json());
 
 app.use('/api/blacklives', blackliveRouter);
 app.use('/api/users', userRouter);
+app.use('/api/comments', commentRouter);
 
 
 app.listen(port, () => {

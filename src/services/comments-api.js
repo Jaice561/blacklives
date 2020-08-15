@@ -1,15 +1,18 @@
+import tokenService from '../services/tokenService';
 const BASE_URL = '/api/comments/';
 
     export function getAll() {
-        return fetch(BASE_URL, {mode: "cors"})
+        return fetch(BASE_URL, {
+            headers: {'Authorization': 'Bearer ' + tokenService.getToken()}
+        },{mode: "cors"})
         .then(res => res.json())
     }
 
-    export function create(blacklive) {
+    export function create(comment) {
         return fetch(BASE_URL, {
             method: "POST",
-            headers: {'content-type': 'application/json'},
-            body: JSON.stringify(blacklive)
+            headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tokenService.getToken()},
+            body: JSON.stringify(comment)
         }, {mode: "cors"})
         .then(res => res.json());
     }
@@ -17,6 +20,7 @@ const BASE_URL = '/api/comments/';
     export function deleteOne(id) {
         return fetch(`${BASE_URL}${id}`, {
             method: "DELETE",
+            headers: {'Authorization': 'Bearer ' + tokenService.getToken()}
         },{mode: "cors"})
         .then(res => res.json());
     }

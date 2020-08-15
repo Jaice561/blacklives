@@ -7,9 +7,9 @@ const Navbar = ({ user,  handleLogout }) => {
             <div className="nav-wrapper">
                 <a className=" J-MO" href="/">J-MO</a>
                 <ul id="nav-mobile" className="right">
-                    <li><a className="nav-link" href="/yourlife-profile">Profile</a></li>
-                    <li><a className="nav-link-b" href="/yourlife/add">Share How Your Life Matter This Week</a></li>    
-                    <li><a href="/" className="nav-link">Welcome, {user.name}</a></li>
+                    <li><a className="nav-link" href="/blacklives">Profile</a></li>
+                    <li><a className="nav-link-b" href="/blacklives/add">Share How Your Life Matter This Week</a></li>    
+                    <li><a href="/blacklives" className="nav-link">Welcome, {user.name}</a></li>
                     <li><a href=" " className="nav-link" onClick={handleLogout}>Log Out</a></li>              
                 </ul>
             </div>

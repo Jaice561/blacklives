@@ -23,10 +23,6 @@ const blackliveSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    comment: {
-        type: Schema.Types.ObjectId,
-        ref: 'Comment'
-    }
 
 }, {timestamps: true})
 
