@@ -11,7 +11,7 @@ function BlackLivePage(props) {
                 <BlackLiveCard
                     key={blacklive._id}
                     blacklive={blacklive}
-                    comments={props.comments.filter(comment => (comment.postedby === blacklive.name))}
+                    comments={props.comments.filter(comment => (comment.blackliveid === blacklive._id))}
                     handleDeleteLive={props.handleDeleteLive}
                     handleAddComment={props.handleAddComment}
                     handleDeleteComment={props.handleDeleteComment}

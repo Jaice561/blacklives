@@ -6,7 +6,8 @@ function BlackLiveCard({ blacklive, handleDeleteLive,comments,handleAddComment,h
       // const [invalidForm,setInvalidForm] = useState(false)
         const [formData,setFormData] = useState({
         'commentname':'',
-        'postedby':blacklive.name
+        'postedby':blacklive.name,
+        'blackliveid': blacklive._id
     })
     const formRef = React.useRef();
 const handleSubmit = e => {
@@ -35,14 +36,17 @@ const handleChange = e => {
                             <h1>Name: {blacklive.name}</h1>
                             <h2>Date: {blacklive.date}</h2>
                             <h2>Occupation: {blacklive.occupation}</h2>
-                            <p>How my life matter this week: {blacklive.msg}</p>
+                        <hr />
+                        </div>
+
+                        <div className="paragraph">
+                            <p>How my life matter this week: <br></br> {blacklive.msg}</p>
                         </div>
 
                         <div className="card-action">
                             {/* <a href="/">This is a link</a> */}
                             <button type="submit" className="btn red" onClick={() => handleDeleteLive(blacklive._id)}>
                     <i className="material-icons left">delete</i>
-                        Delete 
                     </button>
                             <Link
                          className="btn yellow black-text"
@@ -50,14 +54,14 @@ const handleChange = e => {
                              pathname: '/edit',
                              state: {blacklive}
                             }}
-                            ><i className="material-icons left">edit</i>
-                         Edit
+                            ><i className="material-icons left">edit</i>            
                      </Link>
                         </div>
 
                     </div>
                 </div>
             </div>
+                    </div>
                 <div className="child rightdiv">
                     {comments.map(comment =>
                             <>
@@ -84,7 +88,6 @@ const handleChange = e => {
              </form>
              </div>
                      </div>
-            </div>
         </>
     )
 }

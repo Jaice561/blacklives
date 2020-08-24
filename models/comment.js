@@ -12,6 +12,9 @@ const commentSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
+    blackliveid: {
+        type: String,
+    }
 }, {
     timestamps:true
 })

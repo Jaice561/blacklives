@@ -16,7 +16,13 @@ class AddBlackLivePage extends Component {
     formRef = React.createRef();
     handleSubmit = e => {
         e.preventDefault();
-        this.props.handleAddBlackLive(this.state.formData)
+        const formData = new FormData();
+        formData.append('name', this.state.formData.name)
+        formData.append('date', this.state.formData.date)
+        formData.append('occupation', this.state.formData.occupation)
+        formData.append('image', this.state.formData.image)
+        formData.append('msg', this.state.formData.msg)
+        this.props.handleAddBlackLive(formData)
     }
     handleChange = e => {
         const formData = {...this.state.formData, [e.target.name]: e.target.value};
@@ -25,12 +31,19 @@ class AddBlackLivePage extends Component {
             invalidForm: !this.formRef.current.checkValidity()
         });
     };
+
+    handleFileChange = e => {
+        const file = e.target.files[0]
+        var f = {...this.state.formData}
+        f.image = file
+        this.setState({
+            formData:
+            f
+        });
+    };
 render() {
     return (
         <>
-            <NavBar 
-                pageName={"Share How Your Life Matter This Week!"}
-            />
             <div className="AddBLackLivePage">
                     <form className="col s12" ref={this.formRef} onSubmit={this.handleSubmit}>
                         <div className="row">
@@ -56,8 +69,8 @@ render() {
 
                         <div className="row">
                             <div className="input-field col s12">
-                            <input name="image" id="imageURL" type="file" className="active" value={this.state.formData.image} onChange={this.handleChange}/>
-                            <label htmlFor="ImageURL"></label>
+                            <input name="image" id="image" type="file" className="active" onChange={this.handleFileChange}/>
+                            <label htmlFor="Image"></label>
                             </div>
                         </div>
 

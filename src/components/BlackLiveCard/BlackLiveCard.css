@@ -1,23 +1,52 @@
 .container{
-    display: flex;
     justify-content: space-around;
+    display: flex;
+    /* margin-left: 10px; */
 }
 
 .child{
     flex: 1;
 }
 
-.child:first-child{
-    margin-right: 100px;
-}
-
 .rightdiv{
-    margin-top: 200px;
+    margin-top: 30px;
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
+h1 {
+    font-size:25px;
+    font-weight: bolder;
+}
+
+h2 {
+    font-size: 25px;
+    font-weight: bolder;
+}
+
+p {
+    font-size: 30;
+    font-weight: bolder;
+}
+.card {
+    width: 800px;
+}
 .commentspan{
     padding-left: 20px;
     padding-bottom: 20px;
     width: 100px;
     display: inline-block;
+}
+
+.paragraph {
+    padding-right: 110px;
+    padding-top: 30px;
+}
+
+.card-content {
+    margin-left: 30px;
+}
+
+.activator {
+    height: 300px;
 }
