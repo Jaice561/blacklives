@@ -4,6 +4,7 @@ import './App.css';
 import { Route, Redirect } from 'react-router-dom';
 import * as blackliveAPI from '../../services/blacklives-api'
 import * as commentApi from '../../services/comments-api'
+import * as likeApi from '../../services/likes-api'
 import AddBlackLivePage from '../AddBlackLivePage/AddBlackLivePage';
 // import EditBlackLivePage from '../EditBlackLivePage/EditBlackLivePage';
 
@@ -16,6 +17,7 @@ class App extends Component {
   state = {
     blacklives: [],
     comments:[],
+    likes:[],
     user: userService.getUser()
   }
 
@@ -43,6 +45,13 @@ class App extends Component {
     }), ()=> this.props.history.push('/blacklives'));
   }
 
+  handleAddLike = async newLikeData => {
+    const newLike = await likeApi.create(newLikeData);
+    this.setState(state => ({
+      likes: [...state.likes, newLike]
+    }), ()=> this.props.history.push('/blacklives'));
+  }
+
     handleDeleteComment = async id => {
     if(userService.getUser()){
     await commentApi.deleteOne(id);
@@ -53,6 +62,18 @@ class App extends Component {
   else {
     this.props.history.push('/login')
   }
+}
+
+handleDeleteLike = async id => {
+  if(userService.getUser()){
+  await likeApi.deleteOne(id);
+  this.setState(state => ({
+    likes: state.likes.filter(like => like.blackliveid !== id)
+  }), () => this.props.history.push('/blacklives'));
+}
+else {
+  this.props.history.push('/login')
+}
 }
 
   handleDeleteLive = async id => {
@@ -86,7 +107,8 @@ class App extends Component {
   async componentDidMount() {
     const blacklives = await blackliveAPI.getAll();
     const comments = await commentApi.getAll();
-    this.setState({blacklives,comments})
+    const likes = await likeApi.getAll();
+    this.setState({blacklives,comments, likes})
   }
 
   render() {
@@ -101,8 +123,11 @@ class App extends Component {
         <BlackLivePage
         blacklives={this.state.blacklives}
         comments={this.state.comments}
+        likes={this.state.likes}
         handleAddComment={this.handleAddComment}
         handleDeleteComment={this.handleDeleteComment}
+        handleAddLike={this.handleAddLike}
+        handleDeleteLike={this.handleDeleteLike}
         handleDeleteLive={this.handleDeleteLive}
         handleEditLive={this.handleEditLive}
         user={this.state.user}

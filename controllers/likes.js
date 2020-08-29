@@ -10,6 +10,7 @@ module.exports = {
 
 function create(req, res) {
     req.body.user = req.user._id
+    req.body.liked = 'true'
     Like.create(req.body)
     .then(blacklive => {res.json(blacklive)})
     .catch(err => {res.json(err)})
