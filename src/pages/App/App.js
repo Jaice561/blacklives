@@ -6,6 +6,7 @@ import * as blackliveAPI from '../../services/blacklives-api'
 import * as commentApi from '../../services/comments-api'
 import * as likeApi from '../../services/likes-api'
 import AddBlackLivePage from '../AddBlackLivePage/AddBlackLivePage';
+import BlackLiveHomePage from '../BlackLiveHomePage/BlackLiveHomePage';
 // import EditBlackLivePage from '../EditBlackLivePage/EditBlackLivePage';
 
 import BlackLivePage from '../BlackLivePage/BlackLivePage';
@@ -139,6 +140,15 @@ else {
       userService.getUser() ?
         <AddBlackLivePage
         handleAddBlackLive={this.handleAddBlackLive}
+        user={this.state.user}
+        />
+        :
+        <Redirect to='/login' />
+      }>
+      </Route>
+      <Route exact path='/' render={() =>
+      userService.getUser() ?
+        <BlackLiveHomePage
         user={this.state.user}
         />
         :
